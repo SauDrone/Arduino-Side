@@ -57,13 +57,13 @@ ISR(PCINT0_vect) {
         }
 
         // Channel 4 -------------------------------------------------
-        //PB7= pin 13
-        if (PINB & B10000000) {                                        // Is input 13 high ?
-            if (previous_state[mode_mapping[YAW]] == LOW) {                     // Input 13 changed from 0 to 1 (rising edge)
+        //PB3= pin 50
+        if (PINB & B00001000) {                                        // Is input 50 high ?
+            if (previous_state[mode_mapping[YAW]] == LOW) {                     // Input 50 changed from 0 to 1 (rising edge)
                 previous_state[mode_mapping[YAW]] = HIGH;                       // Save current state
                 timer[mode_mapping[YAW]] = current_time;                        // Save current time
             }
-        } else if (previous_state[mode_mapping[YAW]] == HIGH) {                 // Input 13 changed from 1 to 0 (falling edge)
+        } else if (previous_state[mode_mapping[YAW]] == HIGH) {                 // Input 50 changed from 1 to 0 (falling edge)
             previous_state[mode_mapping[YAW]] = LOW;                            // Save current state
             pulse_length[mode_mapping[YAW]] = current_time - timer[mode_mapping[YAW]];   // Calculate pulse duration & save it
         }

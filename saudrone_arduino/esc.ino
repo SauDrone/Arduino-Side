@@ -14,9 +14,9 @@ void applyMotorSpeed() {
   PORTE |= B00001000; //pin 5 high
   PORTH |= B00011000; //pin 6,7 high
 
-  bool fl_flag=false, fr_flag=false, br_flag=false, bl_flag=false;
+  bool fl_flag = false, fr_flag = false, br_flag = false, bl_flag = false;
 
-  
+
   // Wait until all pins #4 #5 #6 #7 are LOW
   while (!fl_flag || !fr_flag || !br_flag || !bl_flag ) {
     now        = micros();
@@ -40,13 +40,30 @@ void applyMotorSpeed() {
 
     if (difference >= pulse_length_esc_br) {
       PORTH &= B11110111; // Set pin #6 LOW
-      br_flag=true;
+      br_flag = true;
     }
 
     if (difference >= pulse_length_esc_bl) {
       PORTH &= B11101111; // Set pin #7 LOW
-      bl_flag=true;
+      bl_flag = true;
     }
 
   }
+}
+
+void escStart() {
+  Servo servo_fl;
+  servo_fl.attach(ESC_FL);
+  Servo servo_fr;
+  servo_fr.attach(ESC_FR);
+  Servo servo_br;
+  servo_br.attach(ESC_BR);
+  Servo servo_bl;
+  servo_bl.attach(ESC_BL);
+  
+  servo_fl.writeMicroseconds(1500); // send "stop" signal to ESC.
+  servo_fr.writeMicroseconds(1500); // send "stop" signal to ESC.
+  servo_br.writeMicroseconds(1500); // send "stop" signal to ESC.
+  servo_bl.writeMicroseconds(1500); // send "stop" signal to ESC.
+  delay(1000); // delay to allow the ESC to recognize the stopped signal
 }

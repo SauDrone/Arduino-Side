@@ -50,7 +50,9 @@ unsigned int pulse_length_esc_fr = 1000;
 unsigned int pulse_length_esc_br = 1000;
 unsigned int pulse_length_esc_bl = 1000;
 
+#include <Servo.h>
 void applyMotorSpeed();
+void escStart();
 //--------------------------ESC Variables-----------------------
 
 
@@ -78,6 +80,11 @@ unsigned int serial_variable_control();
 
 
 void setup() {
+  pinMode(ESC_FL,OUTPUT);
+  pinMode(ESC_FR,OUTPUT);
+  pinMode(ESC_BR,OUTPUT);
+  pinMode(ESC_BL,OUTPUT);
+  //escStart();
   Serial.begin(115200);
   Serial.setTimeout(2);
 
@@ -92,7 +99,7 @@ void setup() {
     PCMSK0 |= (1 << PCINT4); // Set PCINT0 (digital input 10) to trigger an interrupt on state change
     PCMSK0 |= (1 << PCINT5); // Set PCINT1 (digital input 11) to trigger an interrupt on state change
     PCMSK0 |= (1 << PCINT6); // Set PCINT2 (digital input 12)to trigger an interrupt on state change
-    PCMSK0 |= (1 << PCINT7); // Set PCINT3 (digital input 13)to trigger an interrupt on state change
+    PCMSK0 |= (1 << PCINT3); // Set PCINT3 (digital input 13)to trigger an interrupt on state change
 
 }
 
